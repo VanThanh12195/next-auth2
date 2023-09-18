@@ -48,7 +48,7 @@ export async function GET(request) {
     let userFound = await cursor.toArray();
 
     if (userFound.length === 0) {
-      // console.log("user not exist");
+      // console.log("user not exist"); throw 1 error here
     } else {
       let passwordHash = userFound[0].password;
 
@@ -64,7 +64,7 @@ export async function GET(request) {
           email: userFound[0].email,
         });
       } else {
-        return NextResponse.json();
+        // return NextResponse.json();throw second error here
       }
 
       // console.log("Result is " + result);
