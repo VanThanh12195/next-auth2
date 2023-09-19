@@ -31,7 +31,6 @@ export const options = {
         });
 
         if (response.data.error) {
-          console.log("error happen " + response.data.error);
           return null;
         }
         return response.data;

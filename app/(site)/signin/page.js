@@ -3,6 +3,7 @@
 import { signIn } from "next-auth/react";
 
 import { useState } from "react";
+import { redirect } from "next/navigation";
 
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -17,6 +18,7 @@ export default function SignInPage() {
     signIn(providerId, { callbackUrl: searchParams.get("callbackUrl") });
   };
 
+  const [error, setError] = useState();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -24,6 +26,7 @@ export default function SignInPage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setError();
     setFormData({
       ...formData,
       [name]: value,
@@ -33,22 +36,19 @@ export default function SignInPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // var bcrypt = require("bcryptjs");
-    // var passwordHash = bcrypt.hashSync(formData.password, 10);
-
     formData["_id"] = formData.email;
-    // formData["password"] = passwordHash;
 
-   let response = await signIn("credentials", {
+    let response = await signIn("credentials", {
       callbackUrl: searchParams.get("callbackUrl"),
       email: formData.email,
+      redirect: false,
       password: formData.password,
     });
 
-    
-
+    if (response.url) router.replace(response.url);
+    else setError("Please check your email or password!");
   };
-  
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -166,6 +166,15 @@ export default function SignInPage() {
             />
             Sign In with Google
           </button>
+          {error && (
+            <div
+              className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4"
+              role="alert"
+            >
+              <strong className="font-bold">Error: </strong>
+              <span className="block sm:inline">{error}</span>
+            </div>
+          )}
         </div>
       </div>
     </>

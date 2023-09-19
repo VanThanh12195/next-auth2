@@ -3,6 +3,7 @@ import { options } from "./api/auth/[...nextauth]/options";
 import ButtonSignIn from "./components/ButtonSignIn";
 
 export default async function Home() {
+  
   const session = await getServerSession(options);
 
   return (
