@@ -23,31 +23,18 @@ export const options = {
 
         const axios = require("axios");
 
-        let user;
+        let response = await axios.get("http://localhost:3000/api/register", {
+          params: {
+            email: email,
+            password: password,
+          },
+        });
 
-        await axios
-          .get("http://localhost:3000/api/register", {
-            params: {
-              email: email,
-              password: password,
-            },
-          })
-          .then(function (response) {
-
-            if (response?.data === null){
-            }
-            user = response?.data 
-          })
-          .catch(function (error) {
-            // console.log(error);
-          })
-          .finally(function () {
-            // always executed
-          });
-
-
-          // tomorrow write again , using let response = await axios or fetch(on server should use fetch). no .then or. catch
-        return user;
+        if (response.data.error) {
+          console.log("error happen " + response.data.error);
+          return null;
+        }
+        return response.data;
       },
     }),
   ],

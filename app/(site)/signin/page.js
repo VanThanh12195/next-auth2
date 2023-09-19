@@ -30,7 +30,7 @@ export default function SignInPage() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // var bcrypt = require("bcryptjs");
@@ -39,11 +39,14 @@ export default function SignInPage() {
     formData["_id"] = formData.email;
     // formData["password"] = passwordHash;
 
-    signIn("credentials", {
+   let response = await signIn("credentials", {
       callbackUrl: searchParams.get("callbackUrl"),
       email: formData.email,
       password: formData.password,
     });
+
+    
+
   };
   
   return (
