@@ -8,12 +8,15 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
+
 export default function SignInPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const searchParams = useSearchParams();
 
+
+  //check if the searchParam is not register pages, tomorrow fix multiple sign in click
   const handleSignInWithProvider = (providerId) => {
     signIn(providerId, { callbackUrl: searchParams.get("callbackUrl") });
   };
@@ -50,7 +53,8 @@ export default function SignInPage() {
     setLoading(false);
 
     if (response.url) {
-      router.replace(response.url);
+      console.log('url is ' + response.url);
+      router.push(response.url);
       // router.refresh();
     } else setError("Please check your email or password!");
   };

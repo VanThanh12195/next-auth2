@@ -14,7 +14,7 @@ export default function ButtonSignIn({ params }) {
       {session ? (
         <button
           // href={`/api/auth/signout?callbackUrl=${pathname}`}
-          onClick={() => signOut()}
+          onClick={() => signOut()} 
           className="text-white flex-1 px-4 py-2 hover:bg-gray-700 active:bg-gray-900 rounded"
         >
           {params ? params : "Sign Out"}
