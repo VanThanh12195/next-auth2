@@ -36,7 +36,7 @@ export default function SignInPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setLoading(true); 
+    setLoading(true);
 
     formData["_id"] = formData.email;
 
@@ -46,7 +46,6 @@ export default function SignInPage() {
       redirect: false,
       password: formData.password,
     });
-
 
     setLoading(false);
 
@@ -124,9 +123,10 @@ export default function SignInPage() {
                 type="submit"
                 className="flex justify-center items-center flex-grow flex-shrink-0 min-w-0 rounded-md bg-indigo-600 px-6 py-2 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                 {loading ? "Signing in..." : "Sign In"}
+                {loading ? "Signing in..." : "Sign In"}
               </button>
               <button
+                type="button"
                 className="flex justify-center items-center flex-grow flex-shrink-0 min-w-0 rounded-md bg-indigo-600 px-6 py-2 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-1"
                 onClick={() => router.push("/register")}
               >
