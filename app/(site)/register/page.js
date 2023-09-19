@@ -14,9 +14,11 @@ export default function RegisterPage() {
   });
 
   const [isLoading, setIsLoading] = useState(false); // Step 1
+  const [error, setError] = useState(); // Step 1
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setError()
     setFormData({
       ...formData,
       [name]: value,
@@ -40,7 +42,7 @@ export default function RegisterPage() {
       .post("/api/register", formData)
       .then(function (response) {
         if (response?.data?.code === 11000) {
-          alert("DuplicateKey");
+          setError("User already exist! Please log in.");
         }
         if (response?.data?.acknowledged === true) {
           router.push("/api/auth/signin?callbackUrl=/");
@@ -143,13 +145,11 @@ export default function RegisterPage() {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                {isLoading ? "Loading..." : "Register"} {/* Step 3 */}
+                {isLoading ? "Registering..." : "Register"}
               </button>
             </div>
           </form>
           <div className="flex w-full justify-center mt-6">
-            {" "}
-            {/* Step 2 */}
             <Link
               href={`/api/auth/signin?callbackUrl=/`}
               className="text-indigo-600 underline"
@@ -157,6 +157,15 @@ export default function RegisterPage() {
               Back to Login
             </Link>
           </div>
+          {error && (
+            <div
+              className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4"
+              role="alert"
+            >
+              <strong className="font-bold">Error: </strong>
+              <span className="block sm:inline">{error}</span>
+            </div>
+          )}
         </div>
       </div>
     </>

@@ -10,6 +10,7 @@ import Image from "next/image";
 
 export default function SignInPage() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const searchParams = useSearchParams();
 
@@ -35,6 +36,8 @@ export default function SignInPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setLoading(true); 
+
     formData["_id"] = formData.email;
 
     let response = await signIn("credentials", {
@@ -44,9 +47,12 @@ export default function SignInPage() {
       password: formData.password,
     });
 
+
+    setLoading(false);
+
     if (response.url) {
       router.replace(response.url);
-      router.refresh();
+      // router.refresh();
     } else setError("Please check your email or password!");
   };
 
@@ -118,9 +124,8 @@ export default function SignInPage() {
                 type="submit"
                 className="flex justify-center items-center flex-grow flex-shrink-0 min-w-0 rounded-md bg-indigo-600 px-6 py-2 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign In
+                 {loading ? "Signing in..." : "Sign In"}
               </button>
-
               <button
                 className="flex justify-center items-center flex-grow flex-shrink-0 min-w-0 rounded-md bg-indigo-600 px-6 py-2 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-1"
                 onClick={() => router.push("/register")}
