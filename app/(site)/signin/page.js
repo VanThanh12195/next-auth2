@@ -3,7 +3,6 @@
 import { signIn } from "next-auth/react";
 
 import { useState } from "react";
-import { redirect } from "next/navigation";
 
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -45,8 +44,10 @@ export default function SignInPage() {
       password: formData.password,
     });
 
-    if (response.url) router.replace(response.url);
-    else setError("Please check your email or password!");
+    if (response.url) {
+      router.replace(response.url);
+      router.refresh();
+    } else setError("Please check your email or password!");
   };
 
   return (

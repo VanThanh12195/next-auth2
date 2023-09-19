@@ -1,6 +1,7 @@
 import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import { redirect } from "next/navigation";
 
 export const options = {
   providers: [
@@ -33,35 +34,37 @@ export const options = {
         if (response.data.error) {
           return null;
         }
+
         return response.data;
+        
       },
     }),
   ],
   pages: {
     signIn: "/signin",
   },
-  // callbacks: {
-  //   async session({ session, token }) {
-  //     return {
-  //       ...session,
-  //       user: {
-  //         ...session.user,
-  //         id: token.id,
-  //         randomKey: token.randomKey,
-  //       },
-  //     };
-  //   },
-  //   async jwt({ token, user }) {
-  //     if (user) {
-  //       return {
-  //         ...token,
-  //         id: user.id,
-  //         name: user.name,
-  //       };
-  //     }
-  //     return token;
-  //   },
-  // },
+  callbacks: {
+    async session({ session, token }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+          randomKey: token.randomKey,
+        },
+      };
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        return {
+          ...token,
+          id: user.id,
+          name: user.name,
+        };
+      }
+      return token;
+    },
+  },
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
