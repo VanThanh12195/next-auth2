@@ -32,11 +32,13 @@ export default function ButtonSignIn({ params }) {
   // );
 
   function handleSignIn() {
+    console.log(pathname);
     if (pathname != "/signin") signIn();
+    if (pathname === "/register") signIn(undefined, { callbackUrl: "/" });
   }
 
   function handleSignOut() {
-    if (pathname != "/signin") signOut();
+    signOut();
   }
 
   return (
