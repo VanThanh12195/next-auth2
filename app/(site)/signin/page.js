@@ -15,7 +15,6 @@ export default function SignInPage() {
 
   const searchParams = useSearchParams();
 
-
   //check if the searchParam is not register pages, tomorrow fix multiple sign in click
   const handleSignInWithProvider = (providerId) => {
     signIn(providerId, { callbackUrl: searchParams.get("callbackUrl") });
@@ -54,8 +53,9 @@ export default function SignInPage() {
 
     if (response.url) {
       console.log('url is ' + response.url);
-      router.push(response.url);
-      // router.refresh();
+      // router.push(response.url);
+      // window.location.href = response.url;
+      window.location.replace(response.url)
     } else setError("Please check your email or password!");
   };
 

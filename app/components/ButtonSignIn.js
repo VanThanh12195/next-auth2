@@ -9,20 +9,48 @@ export default function ButtonSignIn({ params }) {
 
   const pathname = usePathname();
 
+  // return (
+  //   <div className="flex flex-1 justify-end space-x-4">
+  //     {session ? (
+  //       <Link
+  //         href={`/api/auth/signout?callbackUrl=${pathname}`}
+  //         // onClick={() => signOut()}
+  //         className="text-white flex-1 px-4 py-2 hover:bg-gray-700 active:bg-gray-900 rounded"
+  //       >
+  //         {params ? params : "Sign Out"}
+  //       </Link>
+  //     ) : (
+  //       <Link
+  //         href={`/api/auth/signin?callbackUrl=${pathname}`}
+  //         // onClick={() => signIn()}
+  //         className="text-white flex-1 px-4 py-2 hover:bg-gray-700 active:bg-gray-900 rounded"
+  //       >
+  //         {params ? params : "Sign In"}
+  //       </Link>
+  //     )}
+  //   </div>
+  // );
+
+  function handleSignIn() {
+    if (pathname != "/signin") signIn();
+  }
+
+  function handleSignOut() {
+    if (pathname != "/signin") signOut();
+  }
+
   return (
     <div className="flex flex-1 justify-end space-x-4">
       {session ? (
         <button
-          // href={`/api/auth/signout?callbackUrl=${pathname}`}
-          onClick={() => signOut()} 
+          onClick={handleSignOut}
           className="text-white flex-1 px-4 py-2 hover:bg-gray-700 active:bg-gray-900 rounded"
         >
           {params ? params : "Sign Out"}
         </button>
       ) : (
         <button
-          // href={`/api/auth/signin?callbackUrl=${pathname}`}
-          onClick={() => signIn()}
+          onClick={handleSignIn}
           className="text-white flex-1 px-4 py-2 hover:bg-gray-700 active:bg-gray-900 rounded"
         >
           {params ? params : "Sign In"}

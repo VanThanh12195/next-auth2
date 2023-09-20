@@ -43,28 +43,28 @@ export const options = {
   pages: {
     signIn: "/signin",
   },
-  callbacks: {
-    async session({ session, token }) {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          id: token.id,
-          randomKey: token.randomKey,
-        },
-      };
-    },
-    async jwt({ token, user }) {
-      if (user) {
-        return {
-          ...token,
-          id: user.id,
-          name: user.name,
-        };
-      }
-      return token;
-    },
-  },
+  // callbacks: {
+  //   async jwt({ token, user }) {
+  //     if (user) {
+  //       return {
+  //         ...token,
+  //         id: user.id,
+  //         name: user.name,
+  //       };
+  //     }
+  //     return token;
+  //   },
+  //   async session({ session, token }) {
+  //     return {
+  //       ...session,
+  //       user: {
+  //         ...session.user,
+  //         id: token.id,
+  //         randomKey: token.randomKey,
+  //       },
+  //     };
+  //   },
+  // },
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
